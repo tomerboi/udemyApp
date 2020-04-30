@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 import './style.css';
 import Person from './Person/Person.js';
-import Styled from 'styled-components'
+import Styled from 'styled-components';
+import classes from './App.module.css'
 
 class App extends Component {
 
@@ -56,26 +57,10 @@ class App extends Component {
 
     render() {
         let persons = null;
-        const StyledButton = Styled.button`
-        background-color: ${props => props.alt ? 'blue' : 'green'};
-            &:hover {
-                background-color: ${props => props.alt ? 'salmon' : 'purple'};
-                color: black;
-            }
-        `
-        let style = {
-            backgroundColor: 'green',
-            ':hover': {
-                backgroundColor: 'purple',
-                color: 'black'
-            }
-        };
+    
+        let btClass = [classes.button]
         if (this.state.showPersons) {
-            style.backgroundColor = 'blue';
-            style[':hover'] = {
-                backgroundColor: 'salmon',
-                color: 'grey'
-            }
+            btClass.push(classes.red)
             persons = (
                 <div>
                     {this.state.persons.map((person, index) => {
@@ -89,19 +74,19 @@ class App extends Component {
                 </div>
             );
         }
-        const classes = [];
+        const assignedClasses = [];
         if (this.state.persons.length <= 2) {
-            classes.push('red');
+            assignedClasses.push(classes.red);
         }
         if (this.state.persons.length <= 1) {
-            classes.push('bold');
+            assignedClasses.push(classes.bold);
         }
         return (
             <div>
-                <StyledButton onClick={this.SetShowPersons} alt={this.state.showPersons}>
+                <button className={btClass.join(' ')} onClick={this.SetShowPersons}>
                 {this.state.showPersons ? "Hide!" : "Show!"}
-                </StyledButton>
-                <p className={classes.join(' ')}>This is owsome!</p>
+                </button>
+                <p className={assignedClasses.join(' ')}>This is owsome!</p>
                 {persons}
             </div>
         )
