@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import './style.css';
-import Person from '../Components/Persons/Person/Person.js';
 import classes from './App.module.css';
-import Persons from './Components/Persons/Persons.js'
+import Persons from '../Components/Persons/Persons.js'
 class App extends Component {
 
     state =
@@ -61,16 +59,11 @@ class App extends Component {
         if (this.state.showPersons) {
             btClass.push(classes.red)
             persons = (
-                <div>
-                    {this.state.persons.map((person, index) => {
-                        return <Person
-                            click={() => this.deletePerson(index)}
-                            name={person.name}
-                            age={person.age}
-                            key={person.id}
-                            changed={(event) => this.SetUserNameHandler(event, person.id)} />
-                    })}
-                </div>
+                <Persons
+                    delete={this.deletePerson}
+                    persons={this.state.persons}
+                    change={this.SetUserNameHandler}
+                ></Persons>
             );
         }
         const assignedClasses = [];
@@ -86,7 +79,7 @@ class App extends Component {
                 {this.state.showPersons ? "Hide!" : "Show!"}
                 </button>
                 <p className={assignedClasses.join(' ')}>This is owsome!</p>
-                <Persons show={this.state.showPersons}></Persons>
+                {persons}
             </div>
         )
     }
