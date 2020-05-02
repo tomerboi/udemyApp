@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import './App.css';
 import './style.css';
-import Person from './Person/Person.js';
-import Styled from 'styled-components';
-import classes from './App.module.css'
-
+import Person from '../Components/Persons/Person/Person.js';
+import classes from './App.module.css';
+import Persons from './Components/Persons/Persons.js'
 class App extends Component {
 
     state =
@@ -21,23 +19,24 @@ class App extends Component {
 
         }
 
-    SetUserNameHandler = (event, id) => {
-        console.log("clicked")
-        const personIndex = this.state.persons.findIndex(p => {
-            return p.id === id;
-        })
-
+    SetUserNameHandler = ( event, id ) => {
+        const personIndex = this.state.persons.findIndex( p => {
+          return p.id === id;
+        } );
+    
         const person = {
-            ...this.state.persons[personIndex]
-        }
+          ...this.state.persons[personIndex]
+        };
+    
+        // const person = Object.assign({}, this.state.persons[personIndex]);
+    
         person.name = event.target.value;
-
-        const persons1 = [...this.state.persons]
-        persons1[personIndex] = person;
-        this.setState({
-            persons: persons1
-        })
-    }
+    
+        const persons = [...this.state.persons];
+        persons[personIndex] = person;
+    
+        this.setState( { persons: persons } );
+      }
 
     SetShowPersons = () => {
         this.setState(
@@ -58,7 +57,7 @@ class App extends Component {
     render() {
         let persons = null;
     
-        let btClass = [classes.button]
+        let btClass = [classes.Red]
         if (this.state.showPersons) {
             btClass.push(classes.red)
             persons = (
@@ -82,12 +81,12 @@ class App extends Component {
             assignedClasses.push(classes.bold);
         }
         return (
-            <div>
+            <div className={classes.App}> 
                 <button className={btClass.join(' ')} onClick={this.SetShowPersons}>
                 {this.state.showPersons ? "Hide!" : "Show!"}
                 </button>
                 <p className={assignedClasses.join(' ')}>This is owsome!</p>
-                {persons}
+                <Persons show={this.state.showPersons}></Persons>
             </div>
         )
     }
